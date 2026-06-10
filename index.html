@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MC 指令百科 - Minecraft Java 最新版指令速查</title>
+    <meta
+      name="description"
+      content="Minecraft Java 最新正式版游戏内指令用法、释义、参数、示例和权限速查。"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
+        <a class="brand" href="#top" aria-label="回到顶部">
+          <span class="brand-mark" aria-hidden="true">/</span>
+          <span>
+            <strong>MC 指令百科</strong>
+            <small>Java Edition 26.1.2 最新正式版</small>
+          </span>
+        </a>
+        <nav class="top-nav" aria-label="页面导航">
+          <a href="#browser">指令浏览</a>
+          <a href="#syntax">语法说明</a>
+          <a href="#sources">资料来源</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="version-line">核验日期：2026-06-10 · 范围：Java 正式版，不含快照/预发布专属内容</p>
+            <h1>Minecraft 游戏内指令完整速查</h1>
+            <p>
+              面向地图作者、服务器管理和命令方块玩家，整理最新版 Java 指令的用途、常见语法、
+              参数释义、执行权限和示例。复杂命令按子命令拆解，便于直接查找。
+            </p>
+            <div class="hero-actions">
+              <a class="primary-action" href="#browser">开始查指令</a>
+              <button class="secondary-action" id="copy-current" type="button">复制当前语法</button>
+            </div>
+          </div>
+          <aside class="status-board" aria-label="站点数据状态">
+            <div>
+              <span class="stat-number" id="command-count">0</span>
+              <span class="stat-label">主指令条目</span>
+            </div>
+            <div>
+              <span class="stat-number">26.1.2</span>
+              <span class="stat-label">Latest Release</span>
+            </div>
+            <div>
+              <span class="stat-number">JE</span>
+              <span class="stat-label">当前数据版本</span>
+            </div>
+          </aside>
+        </section>
+
+        <section class="notice">
+          <strong>版本说明</strong>
+          <span>
+            数据以 Minecraft Launcher 的 “Latest Release” Java 正式版为准。页面已补入 1.21.5 的
+            <code>/test</code>、1.21.6 的 <code>/dialog</code>/<code>/version</code>/<code>/waypoint</code>、
+            1.21.11 的 <code>/stopwatch</code>，以及 26.1 的 <code>/swing</code>、
+            <code>/time rate</code>、<code>/fetchprofile entity</code> 等命令变化。
+          </span>
+        </section>
+
+        <section class="browser" id="browser" aria-label="指令浏览器">
+          <div class="toolbar">
+            <label class="search-box">
+              <span>搜索</span>
+              <input
+                id="search-input"
+                type="search"
+                placeholder="输入 /execute、传送、scoreboard、OP 等"
+                autocomplete="off"
+              />
+            </label>
+            <label>
+              <span>分类</span>
+              <select id="category-filter"></select>
+            </label>
+            <label>
+              <span>权限</span>
+              <select id="level-filter">
+                <option value="all">全部权限</option>
+                <option value="0">0 - 普通玩家</option>
+                <option value="2">2 - 常用管理员</option>
+                <option value="3">3 - 管理封禁</option>
+                <option value="4">4 - 服务器控制</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="workspace">
+            <aside class="command-list" aria-label="指令列表">
+              <div class="list-meta">
+                <span id="result-count">0 个结果</span>
+                <button id="reset-filters" type="button">重置</button>
+              </div>
+              <div id="command-list" role="listbox" aria-label="可选指令"></div>
+            </aside>
+
+            <article class="command-detail" id="command-detail" aria-live="polite"></article>
+
+            <aside class="quick-panel" aria-label="速查面板">
+              <h2>常用参数速记</h2>
+              <dl>
+                <dt><code>&lt;targets&gt;</code></dt>
+                <dd>玩家或实体选择器，如 <code>@p</code>、<code>@a</code>、<code>@e[type=zombie]</code>。</dd>
+                <dt><code>&lt;pos&gt;</code></dt>
+                <dd>坐标；支持绝对坐标、相对坐标 <code>~</code>、局部坐标 <code>^</code>。</dd>
+                <dt><code>&lt;nbt&gt;</code></dt>
+                <dd>Java NBT 数据；常用于 <code>/data</code>、<code>/summon</code>、物品组件。</dd>
+                <dt><code>&lt;resource&gt;</code></dt>
+                <dd>命名空间 ID，如 <code>minecraft:stone</code>、<code>custom:boss</code>。</dd>
+              </dl>
+              <div class="mini-card">
+                <h3>读语法</h3>
+                <p><code>&lt;必填&gt;</code> 必须输入，<code>[可选]</code> 可以省略，竖线表示多选一。</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="guide" id="syntax">
+          <div>
+            <h2>语法与执行环境</h2>
+            <p>
+              聊天栏输入命令需要前置 <code>/</code>；服务器控制台通常不需要。命令方块、函数文件和
+              <code>run_command</code> 文本事件也能执行命令。多数管理命令要求开启作弊或拥有足够 OP 权限。
+            </p>
+          </div>
+          <div class="syntax-grid">
+            <div>
+              <h3>选择器</h3>
+              <p><code>@p</code> 最近玩家，<code>@a</code> 所有玩家，<code>@r</code> 随机玩家，<code>@e</code> 所有实体，<code>@s</code> 执行者。</p>
+            </div>
+            <div>
+              <h3>权限级别</h3>
+              <p>0 普通可用，2 常用作弊/命令方块，3 管理玩家，4 控制服务器进程或性能采样。</p>
+            </div>
+            <div>
+              <h3>命名空间</h3>
+              <p>未写命名空间时通常默认 <code>minecraft:</code>。数据包命令建议显式写出命名空间。</p>
+            </div>
+            <div>
+              <h3>返回值</h3>
+              <p>很多命令可配合 <code>/execute store</code> 存储结果，适合计分板、数据包和自动化逻辑。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="sources" id="sources">
+          <h2>资料来源与维护口径</h2>
+          <ul>
+            <li>
+              <a href="https://www.minecraft.net/en-us/article/minecraft-java-edition-26-1-2" target="_blank" rel="noreferrer">
+                Minecraft Java Edition 26.1.2 官方发布页
+              </a>
+            </li>
+            <li>
+              <a href="https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-11" target="_blank" rel="noreferrer">
+                Minecraft Java Edition 1.21.11 官方发布页：/stopwatch 与命令变化
+              </a>
+            </li>
+            <li>
+              <a href="https://www.minecraft.net/en-us/article/minecraft-java-edition-26-1" target="_blank" rel="noreferrer">
+                Minecraft Java Edition 26.1 官方发布页：/swing、/time、/fetchprofile
+              </a>
+            </li>
+            <li>
+              <a href="https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-6" target="_blank" rel="noreferrer">
+                Minecraft Java Edition 1.21.6 官方发布页：/dialog、/version、/waypoint
+              </a>
+            </li>
+            <li>
+              <a href="https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-5" target="_blank" rel="noreferrer">
+                Minecraft Java Edition 1.21.5 官方发布页：/test 命令
+              </a>
+            </li>
+            <li>
+              <a href="https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-2" target="_blank" rel="noreferrer">
+                Minecraft Java Edition 1.21.2 官方发布页：/rotate 命令
+              </a>
+            </li>
+            <li>
+              <a href="https://www.minecraft.net/en-us/article/minecraft-java-edition-1-20-5" target="_blank" rel="noreferrer">
+                Minecraft Java Edition 1.20.5 官方发布页：/transfer 命令
+              </a>
+            </li>
+            <li>
+              <a href="https://minecraft.fandom.com/wiki/Commands" target="_blank" rel="noreferrer">
+                Minecraft Wiki Commands：指令清单与基础说明
+              </a>
+            </li>
+          </ul>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
